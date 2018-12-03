@@ -7,23 +7,25 @@
 //============================================================================
 
 #include "../includes/data_store.h"
-#include "../../crypto/includes/crypto_AES.h"
 
-bool DataStore::decrypt(std::string &myString) {
-	if (myCrypto) {
+DataStore::DataStore(Crypto *pCrypt) : myCrypto(pCrypt) {
 
-	}
-	return true;
-}
-
-bool DataStore::encrypt(std::string &myString) {
-	return false;
-}
-
-DataStore::DataStore(Crypto *pCrypt) {
-	myCrypto = pCrypt;
 }
 
 DataStore::~DataStore(void) {
 
+}
+
+bool DataStore::decrypt(std::string &myString) {
+	if (myCrypto) {
+		return myCrypto->decrypt(myString);
+	}
+	return false;
+}
+
+bool DataStore::encrypt(std::string &myString) {
+	if (myCrypto) {
+		return myCrypto->encrypt(myString);
+	}
+	return false;
 }

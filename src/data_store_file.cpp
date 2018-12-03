@@ -10,8 +10,8 @@
 #include <fstream>
 #include <sstream>
 
-DataStore_File::DataStore_File(std::string fileName, Crypto* crypto) {
-	myFileName = fileName;
+DataStore_File::DataStore_File(std::string fileName, Crypto* crypto) :
+		DataStore(crypto), myFileName(fileName) {
 }
 
 DataStore_File::~DataStore_File(void) {
@@ -25,13 +25,13 @@ bool DataStore_File::load(std::vector<String_Data> &myVector) {
 	}
 
 	std::string line;
-	while(!file.eof()) {
+	while (!file.eof()) {
 		getline(file, line);
 		//TODO Factor for crypt
 		std::vector<std::string> tokens;
 		std::string token;
 		std::stringstream ss(line);
-		while(getline(ss, token, ',')) {
+		while (getline(ss, token, ',')) {
 			tokens.push_back(token);
 		}
 		myVector.push_back(String_Data(tokens[0], std::stoi(tokens[1])));
